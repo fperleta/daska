@@ -19,6 +19,7 @@
 #include "mod/mem.h"
 #include "mod/net.h"
 #include "mod/power.h"
+#include "mod/volume.h"
 #include "mod/xmonad.h"
 
 // arguments {{{
@@ -202,6 +203,11 @@ main (int argc, char** argv)
         wlan->font = default_font;
         bar->right.push_back (wlan);
 
+        auto sound = make_shared<view::gauge_cell> ();
+        sound->width = 40;
+        sound->height = 6;
+        bar->right.push_back (sound);
+
         auto memuse = make_shared<view::text_cell> ();
         memuse->font = default_font;
         bar->right.push_back (memuse);
@@ -216,6 +222,7 @@ main (int argc, char** argv)
         mod::net wla (wlan, "wlp2s0");
         mod::cpu cores (cpus);
         mod::mem chips (memuse);
+        mod::volume vol (sound);
 
         ui::daska_window w (conn, bar);
         w.map ();

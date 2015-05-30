@@ -3,7 +3,7 @@
 SHELL=/bin/sh
 CXX=g++
 CPP=g++ -E
-PKGS=xcb cairo-xcb pangocairo
+PKGS=xcb cairo-xcb pangocairo alsa
 HEAD="`git rev-parse --short HEAD` `date -Iseconds`"
 CCFLAGS=-W -Wall -std=gnu++14 -pthread -g -Og -DDEBUG \
 	$(PKGS:%=`pkg-config --cflags %`) \
