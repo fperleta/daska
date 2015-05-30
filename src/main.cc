@@ -14,8 +14,8 @@
 #include "view.h"
 #include "ui.h"
 #include "mod/clock.h"
-#include "mod/pipe.h"
 #include "mod/xmonad.h"
+#include "mod/power.h"
 
 // arguments {{{
 
@@ -187,8 +187,14 @@ main (int argc, char** argv)
         clock->font = default_font;
         bar->right.push_back (clock);
 
+        auto power = make_shared<view::gauge_cell> ();
+        power->width = 40;
+        power->height = 6;
+        bar->right.push_back (power);
+
         mod::xmonad xm (conn, cur_ws, pre_ws, pst_ws, urg_ws, state, title);
         mod::clock clk (clock);
+        mod::power pwr (power);
 
         ui::daska_window w (conn, bar);
         w.map ();
