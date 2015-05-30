@@ -42,6 +42,7 @@ clock::timer_cb (ev::timer&, int)
     strftime (buf, 255, format.c_str (), localtime (&t));
     cell->text = buf;
     cell->dirty = true;
+    timer.again ();
 }
 
 // }}}
