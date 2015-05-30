@@ -10,7 +10,7 @@ install:	daska
 include config.mk
 
 DASKA_OBJS=main ui view
-DASKA_MOD_OBJS=clock pipe power xmonad
+DASKA_MOD_OBJS=clock net pipe power xmonad
 
 OBJS=$(addsuffix .o, \
      $(addprefix obj/, $(DASKA_OBJS) \

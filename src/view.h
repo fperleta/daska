@@ -21,7 +21,7 @@ namespace view {
         bool visible = true;
         int width = 12, height = 12;
         int padding = 8;
-        draw::rgba bgcolor = draw::rgba (draw::color::base03, 0.9);
+        draw::rgba bgcolor = draw::rgba (draw::color::base03, 0.8);
 
         virtual void predraw (draw::pango&) = 0;
         virtual void draw (draw::cairo&, draw::pango&) = 0;

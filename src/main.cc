@@ -14,8 +14,9 @@
 #include "view.h"
 #include "ui.h"
 #include "mod/clock.h"
-#include "mod/xmonad.h"
+#include "mod/net.h"
 #include "mod/power.h"
+#include "mod/xmonad.h"
 
 // arguments {{{
 
@@ -150,7 +151,7 @@ main (int argc, char** argv)
         using namespace draw;
 
         auto default_font = pango::make_font ("Terminus 8");
-        auto title_font = pango::make_font ("Droid Sans 10");
+        auto title_font = pango::make_font ("Droid Sans Bold 10");
 
         auto bar = make_shared<view::bar> ();
 
@@ -160,7 +161,7 @@ main (int argc, char** argv)
 
         auto cur_ws = make_shared<view::text_cell> ();
         cur_ws->font = default_font;
-        cur_ws->bgcolor = rgba {color::base1, 0.75};
+        cur_ws->bgcolor = rgba {color::base1, 0.8};
         cur_ws->fgcolor = color::base02;
         bar->left.push_back (cur_ws);
 
@@ -170,17 +171,19 @@ main (int argc, char** argv)
 
         auto urg_ws = make_shared<view::text_cell> ();
         urg_ws->font = default_font;
-        urg_ws->bgcolor = rgba {color::red, 0.9};
+        urg_ws->bgcolor = rgba {color::red, 0.8};
         urg_ws->fgcolor = color::base03;
         bar->left.push_back (urg_ws);
 
         auto state = make_shared<view::text_cell> ();
         state->font = default_font;
-        state->bgcolor = rgba {color::base02, 0.9};
         bar->left.push_back (state);
 
         auto title = make_shared<view::text_cell> ();
         title->font = title_font;
+        title->padding = 16;
+        title->bgcolor = rgba {color::base1, 0.8};
+        title->fgcolor = color::base03;
         bar->middle = title;
 
         auto clock = make_shared<view::text_cell> ();
@@ -192,9 +195,14 @@ main (int argc, char** argv)
         power->height = 6;
         bar->right.push_back (power);
 
+        auto wlan = make_shared<view::text_cell> ();
+        wlan->font = default_font;
+        bar->right.push_back (wlan);
+
         mod::xmonad xm (conn, cur_ws, pre_ws, pst_ws, urg_ws, state, title);
         mod::clock clk (clock);
         mod::power pwr (power);
+        mod::net wla (wlan, "wlp2s0");
 
         ui::daska_window w (conn, bar);
         w.map ();
