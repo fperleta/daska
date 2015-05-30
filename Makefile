@@ -3,6 +3,10 @@
 
 all:	daska
 
+install:	daska
+	rm $$HOME/bin/daska
+	cp bin/daska $$HOME/bin/daska
+
 include config.mk
 
 DASKA_OBJS=main ui view

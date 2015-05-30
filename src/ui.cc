@@ -4,6 +4,7 @@
  * copyright (c) 2015 Frano Perleta
  */
 
+#include <unistd.h>
 #include "common.h"
 #include "config.h"
 #include "draw.h"
@@ -379,6 +380,46 @@ ui::daska_window::daska_window
 {
     idle.set<ui::daska_window, &ui::daska_window::idle_cb> (this);
     idle.start ();
+
+    xcb_change_property
+        ( c.xconn, XCB_PROP_MODE_REPLACE
+        , xw, XCB_ATOM_WM_NAME, XCB_ATOM_STRING
+        , 8, 5, "daska" );
+
+    xcb_change_property
+        ( c.xconn, XCB_PROP_MODE_REPLACE
+        , xw, XCB_ATOM_WM_CLASS, XCB_ATOM_STRING
+        , 8, 5, "daska" );
+
+    /* pid */ {
+        uint32_t x = getpid ();
+        xcb_change_property
+            ( c.xconn, XCB_PROP_MODE_REPLACE
+            , xw, c.atom ("_NEW_WM_PID"), XCB_ATOM_CARDINAL
+            , 32, 1, &x );
+    }
+
+    /* lower window */ {
+        uint32_t x = XCB_STACK_MODE_BELOW;
+        xcb_configure_window (c.xconn, xw, XCB_CONFIG_WINDOW_STACK_MODE, &x);
+    }
+
+    /* window type */ {
+        auto wt = c.atom ("_NET_WM_WINDOW_TYPE_DOCK");
+
+        xcb_change_property
+            ( c.xconn, XCB_PROP_MODE_REPLACE
+            , xw, c.atom ("_NET_WM_WINDOW_TYPE"), XCB_ATOM_ATOM
+            , 32, 1, &wt );
+    }
+
+    /* struts */ {
+        uint32_t struts[4] {0, 0, 14, 0};
+        xcb_change_property
+            ( c.xconn, XCB_PROP_MODE_REPLACE
+            , xw, c.atom ("_NET_WM_STRUT"), XCB_ATOM_CARDINAL
+            , 32, 4, struts );
+    }
 }
 
 ui::daska_window::~daska_window ()
