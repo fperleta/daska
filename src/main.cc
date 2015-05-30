@@ -2,6 +2,7 @@
 /*
  * daska/main.cc
  * copyright (c) 2015 Frano Perleta
+ * see the file LICENCE.txt for copyright information.
  */
 
 #include <argp.h>

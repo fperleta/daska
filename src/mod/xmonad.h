@@ -2,6 +2,7 @@
 /*
  * daska/mod/xmonad.h
  * copyright (c) 2015 Frano Perleta
+ * see the file LICENCE.txt for copyright information.
  */
 
 #ifndef DASKA_MOD_XMONAD_H
