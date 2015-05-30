@@ -23,10 +23,6 @@ power::power
     , unsigned seconds )
     : cell (cell_)
 {
-    timer.set<power, &power::timer_cb> (this);
-    timer.set (0, seconds);
-    timer.again ();
-
     /* ac online */ {
         ac_fd = open ("/sys/class/power_supply/ADP1/online", O_RDONLY);
     }
@@ -42,6 +38,10 @@ power::power
         close (fd);
         bat_full = stoul (buf);
     }
+
+    timer.set<power, &power::timer_cb> (this);
+    timer.set (0, seconds);
+    timer_cb (timer, 0);
 }
 
 // }}}

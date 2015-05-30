@@ -18,7 +18,7 @@ clock::clock (view::text_cell_ptr cell_)
 {
     timer.set<clock, &clock::timer_cb> (this);
     timer.set (0, 1);
-    timer.again ();
+    timer_cb (timer, 0);
 }
 
 // }}}

@@ -420,6 +420,8 @@ ui::daska_window::daska_window
             , xw, c.atom ("_NET_WM_STRUT"), XCB_ATOM_CARDINAL
             , 32, 4, struts );
     }
+
+    xcb_flush (c.xconn);
 }
 
 ui::daska_window::~daska_window ()
