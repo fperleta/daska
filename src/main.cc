@@ -15,6 +15,7 @@
 #include "ui.h"
 #include "mod/clock.h"
 #include "mod/cpu.h"
+#include "mod/mem.h"
 #include "mod/net.h"
 #include "mod/power.h"
 #include "mod/xmonad.h"
@@ -200,6 +201,10 @@ main (int argc, char** argv)
         wlan->font = default_font;
         bar->right.push_back (wlan);
 
+        auto memuse = make_shared<view::text_cell> ();
+        memuse->font = default_font;
+        bar->right.push_back (memuse);
+
         auto cpus = make_shared<view::text_cell> ();
         cpus->font = default_font;
         bar->right.push_back (cpus);
@@ -209,6 +214,7 @@ main (int argc, char** argv)
         mod::power pwr (power);
         mod::net wla (wlan, "wlp2s0");
         mod::cpu cores (cpus);
+        mod::mem chips (memuse);
 
         ui::daska_window w (conn, bar);
         w.map ();
